@@ -1,0 +1,10 @@
+{
+  // turn on the eslint config on save
+  "editor.codeActionsOnSave": {
+  "source.fixAll.eslint": "explicit"
+  },
+  // Tailwind CSS configuration
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false
+}
