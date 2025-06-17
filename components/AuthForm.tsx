@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,6 +17,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import Image from 'next/image';
+import Link from 'next/link';
 
 const formSchema = z.object({
   fullName: z.string().min(2).max(50),
@@ -29,6 +29,8 @@ type FormType = 'sign-in' | 'sign-up';
 const AuthForm = ({ type }: { type: FormType }) => {
   // adding a loading state
   const [isLoading, setIsLoading] = useState(false);
+  // error message state
+  const [errorMessage, setErrorMessage] = useState('');
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,7 +57,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           <h1 className="form-title">
             {type === "sign-in" ? "Sign In" : "Sign Up"} 
           </h1>
-          {/* The form field will only show if the user is signing up */}
+          {/* The fullName form field will only show if the user is signing up */}
           {type === "sign-up" && (
             <FormField
               control={form.control}
@@ -73,6 +75,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
               )}
             />
           )}
+          {/* The email form field will always show */}
           <FormField
             control={form.control}
             name="email"
@@ -88,19 +91,35 @@ const AuthForm = ({ type }: { type: FormType }) => {
               </FormItem>
             )}
           />
+
           {/* since we're using OTP verification, we don't need a password field */}
-          <Button type="submit" className="form-submit-button">
+
+          {/* disable the button if the page is loading, so the user can't click it */}
+          <Button type="submit" className="form-submit-button" disabled={isLoading}>
             {type === "sign-in" ? "Sign In" : "Sign Up"}
             {isLoading && (
               <Image src="/assets/icons/loader.svg" alt="loader" width={24} height={24} className="ml-2 animate-spin" />
             )}
           </Button>
+          
+          {/* show the error message if there is one */}
+          {errorMessage && (
+            <p className="error-message">*{errorMessage}</p>
+          )}
+
+          <div className='body-2 flex justify-center'>
+            <p className='text-light-100'>
+              {type === "sign-in" ? "Don't have an account?" : "Already have an account?"}
+            </p>
+            <Link href={type === "sign-in" ? "/sign-up" : "/sign-in"} className="ml-2 font-medium text-brand">
+              {type === "sign-in" ? "Sign Up" : "Sign In"}
+            </Link>
+          </div>
         </form>
       </Form>
 
       {/* OTP Verification (one-time password) will happen here */}
     </>
-    
   )
 }
 
