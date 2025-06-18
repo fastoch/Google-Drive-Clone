@@ -20,10 +20,14 @@
 - global search to find any uploaded file 
 - responsive UI that works on all devices
 
-# Getting started
+---
+
+# Implementing the project
 
 - to run the app in dev mode, run `npm run dev`
 - then go to http://localhost:3000/sign-up or http://localhost:3000/sign-in
+
+---
 
 ## Authentication pages
 
@@ -46,4 +50,26 @@ Now we can focus on the right side of the pages, the authentication Form.
 
 https://ui.shadcn.com/docs/components/form#create-a-form-schema  
 
-# 
+### Note (tip)
+
+We wrap the form into an empty React fragment `<></>` because our component will render multiple elements:
+- the form
+- the submit button
+- a link to the sign-in or sign-up page
+- the OTP verification window
+
+More info: https://www.perplexity.ai/search/why-wrapping-a-form-into-an-em-HaLJWLdJSO6dBpw7E7qKGw
+
+---
+
+# Appwrite (backend)
+
+We will use Appwrite as our backend service. This will allow us to:
+- register new users
+- authenticate users
+- store files in the cloud
+
+
+
+---
+EOF
