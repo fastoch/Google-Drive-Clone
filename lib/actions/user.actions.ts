@@ -11,13 +11,15 @@ import { appwriteConfig } from "../appwrite/config";
 // 
 // 1. User enters full name and email address
 // 2. check if user already exists using the email
-// 3. Send OTP to user's email
-// 4. send a secret key for creating a session
-// 5. create a new user document if the user does not exist
-// 6. return the user's accountId that will be used to complete the logging process
-// 7. verify OTP and authenticate the user if it checks out
+// 3. Send OTP to user's email 
+// 4. create a new user document if the user does not exist
+// 5. return the user's accountId that will be used to complete the authentication process
+// 6. verify OTP and authenticate the user if it checks out
 
-// Helper functions
+
+// ** Helper functions **
+
+// find the user via the provided email
 const getUserByEmail = async (email: string) => {
   const { databases } = await createAdminClient();
   const result = await databases.listDocuments(
@@ -33,6 +35,7 @@ const handleError = (error: unknown, message: string) => {
   throw error;
 };
 
+// send OTP to the user's email to make sure they have access to the email
 const sendEmailOTP = async ({email}:{email:string}) => {
   const { account } = await createAdminClient();
   try {
@@ -42,6 +45,7 @@ const sendEmailOTP = async ({email}:{email:string}) => {
     handleError(error, "Failed to send OTP email");
   }
 };
+// ** End of helper functions **
 
 
 // Our first server action
@@ -50,6 +54,23 @@ const createAccount = async ({ fullName, email }:{ fullName:string, email:string
   const existingUser = await getUserByEmail(email);
 
   const accountId = await sendEmailOTP({email});
+  if(!accountId) throw new Error("Failed to send an OTP");
+
+  // if the user does not exist, create a new user document
+  if(!existingUser) {
+    const { databases } = await createAdminClient();
+    await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.usersCollectionId,
+      ID.unique(),
+      {
+        fullName,
+        email,
+        avatar: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
+        accountId,
+      }
+    )
+  }
 };
 
 
