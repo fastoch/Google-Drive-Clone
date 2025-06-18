@@ -69,6 +69,14 @@ We will use Appwrite as our backend service. This will allow us to:
 - authenticate users
 - store files in the cloud
 
+Our environment variables are stored in the `.env.local` file.  
+Since this file is gitignored, we need to export our env variables via the `/lib/appwrite/config.ts` file.  
+Then we can import them into the `index.ts` file: `import { appwriteConfig } from '@/lib/appwrite/config';` 
+
+## Allowing our users to sign up (first server action)
+
+
+
 
 
 ---
