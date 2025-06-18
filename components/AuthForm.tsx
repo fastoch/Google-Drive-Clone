@@ -19,12 +19,20 @@ import { Input } from "@/components/ui/input"
 import Image from 'next/image';
 import Link from 'next/link';
 
-const formSchema = z.object({
-  fullName: z.string().min(2).max(50),
-  email: z.string().email(),
-})
+// default form schema provided by shadcn
+// const formSchema = z.object({
+//   username: z.string().min(2).max(50),
+// })
 
 type FormType = 'sign-in' | 'sign-up';
+
+// our custom form schema where the fullName field only shows when the user is signing up
+const authFormSchema = (formType: FormType) => {
+  return z.object({
+    email: z.string().email(),
+    fullName: formType === 'sign-up' ? z.string().min(2).max(50) : z.string().optional(),
+  })
+}
 
 const AuthForm = ({ type }: { type: FormType }) => {
   // adding a loading state
@@ -32,12 +40,14 @@ const AuthForm = ({ type }: { type: FormType }) => {
   // error message state
   const [errorMessage, setErrorMessage] = useState('');
 
+  const formSchema = authFormSchema(type); // using our custom form schema and passing in the form type
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: "",
-      email: "",
+      email: '',
     },
   })
  
