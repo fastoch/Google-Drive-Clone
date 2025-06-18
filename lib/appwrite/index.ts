@@ -1,3 +1,6 @@
+// we need this directive to avoid exposing the secret key to the client
+'use server'; 
+
 // we will use the "node-appwrite" SDK (installed via npm)
 // node-appwrite will allow us to use Appwrite in a Node.js environment
 
