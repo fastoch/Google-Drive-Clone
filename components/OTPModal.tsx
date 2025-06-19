@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 // shadcn alert-dialog imports
 import {
@@ -21,20 +22,46 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 
-const OTPModal = () => {
-  const [isOpen, setIsOpen] = React.useState(true);
-  // we set the initial state to true to show the modal as soon as we get the accountId
+const OTPModal = ({accountId, email}:{accountId:string, email: string} ) => {
+  const [isOpen, setIsOpen] = React.useState(true); // set the initial state to true to show the modal as soon as we get the accountId
+  const [password, setPassword] = React.useState(''); // state for the OTP value
+  const [isLoading, setIsLoading] = React.useState(false); // state for the loading state
+
+  // OTP submission handler
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); // prevents the default form submission behavior (page reload)
+    setIsLoading(true); // show the loading spinner while the OTP is being verified
+    try {
+      // call API to verify the OTP
+      
+    } catch(error) {
+      console.log('Failed to verify OTP', error);
+    }
+    setIsLoading(false); // hide the loading spinner
+  };
+
+  // for users who haven't used the OTP within 15 minutes
+  const handleResendOTP = async() => {
+    // call API to resend the OTP email
+  }
 
   return (
     // using the shadcn alert dialog component
-    <AlertDialog>
-      <AlertDialogTrigger>Open</AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your account
-            and remove your data from our servers.
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogContent className='shad-alert-dialog'>
+        <AlertDialogHeader className='relative flex justify-center'>
+          <AlertDialogTitle className='h2 text-center'>
+            Enter your OTP
+            <Image 
+              src="/assets/icons/close-dark.svg" 
+              alt="close" 
+              width={20} height={20} 
+              onClick={() => setIsOpen(false)} 
+              className="otp-close-button" 
+            />
+          </AlertDialogTitle>
+          <AlertDialogDescription className='subtitle-2 text-center text-light-100'>
+            We have sent a code to <span>{email}</span>. Please enter it below.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
