@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import { z } from "zod"
+import { set, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
@@ -18,6 +18,9 @@ import {
 import { Input } from "@/components/ui/input"
 import Image from 'next/image';
 import Link from 'next/link';
+import { create } from 'domain';
+import { createAccount } from '@/lib/actions/user.actions';
+import OTPModal from './OTPModal';
 
 // default form schema provided by shadcn
 // const formSchema = z.object({
@@ -35,10 +38,12 @@ const authFormSchema = (formType: FormType) => {
 }
 
 const AuthForm = ({ type }: { type: FormType }) => {
-  // adding a loading state
+  // adding a loading state for the form submit button
   const [isLoading, setIsLoading] = useState(false);
   // error message state
   const [errorMessage, setErrorMessage] = useState('');
+  // accountId state for when a new user is created (sign-up)
+  const [accountId, setAccountId] = useState(null);
 
   const formSchema = authFormSchema(type); // using our custom form schema and passing in the form type
 
@@ -51,11 +56,24 @@ const AuthForm = ({ type }: { type: FormType }) => {
     },
   })
  
-  // 2. Define a submit handler.
+  // 2. Define a submit handler
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+    setIsLoading(true); // set loading state to true because we're about to send a request to the server
+    setErrorMessage(''); // clears any previous error message from the UI before a new submission attempt
+
+    // create new user account if not already existing (see user.actions.ts)
+    try {
+      const user = await createAccount({  
+        fullName: values.fullName || '',  // empty string if the user is trying to sign in
+        email: values.email
+      });
+
+      setAccountId(user.accountId);
+    } catch {
+      setErrorMessage("Failed to create an account. Please try again.");
+    } finally {
+      setIsLoading(false); // set loading state to false because we're done with the request
+    }
   }
 
   return (
@@ -129,7 +147,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
         </form>
       </Form>
 
-      {/* OTP Verification (one-time password) will happen here */}
+      {/* OTP Verification */}
+      {/* show the OTP modal if the user is signing up */}
+      {accountId && <OTPModal email={form.getValues('email')} accountId={accountId} />}
     </>
   )
 }

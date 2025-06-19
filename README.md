@@ -75,9 +75,13 @@ Then we can import them into the `index.ts` file: `import { appwriteConfig } fro
 
 ## Allowing our users to sign up (first server action)
 
+see `lib/actions/user.actions.ts` + submit handler in `components/AuthForm.tsx`
 
+## OTP Modal (only used on the sign-up page)
 
+see `components/OTPModal.tsx` + at the bottom of `components/AuthForm.tsx`  
 
+if accountId exists, which means that the user has verified themselves, we can then show the OTP modal
 
 ---
 EOF
