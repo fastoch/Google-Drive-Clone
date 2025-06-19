@@ -81,7 +81,15 @@ see `lib/actions/user.actions.ts` + submit handler in `components/AuthForm.tsx`
 
 see `components/OTPModal.tsx` + at the bottom of `components/AuthForm.tsx`  
 
-if accountId exists, which means that the user has verified themselves, we can then show the OTP modal
+once again, we'll use shadcn/ui to implement this OTP modal: 
+- `npx shadcn@latest add alert-dialog`
+- `npx shadcn@latest add input-otp`
+
+Note: the InputOTP component has to be placed between the AlertDialogHeader and the AlertDialogFooter components.  
+
+## Signing in (second server action)
+
+
 
 ---
 EOF
