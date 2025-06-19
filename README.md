@@ -88,14 +88,20 @@ once again, we'll use shadcn/ui to implement this OTP modal:
 
 Note: the InputOTP component has to be placed between the AlertDialogHeader and the AlertDialogFooter components.  
 
-# Implementing the dashboard (frontend)
+# Implementing the dashboard (home page)
 
 - in our `app` folder, we create a new route group (like we did for the auth pages) called `(root)`
 - within it, we create a new `layout.tsx` file
 - type `rafce` to create a new React functional component (requires React snippet extension for VSCodium)
 - as any layout, it will receive a `children` prop
 - move the `page.tsx` file from the `app/` folder to the `app/(root)` folder
-- within the `components` folder, we create new files called `Sidebar.tsx`, `MobileNavigation.tsx`, and `Header.tsx`
+- within the `components` folder, we create new files called:
+  - `Sidebar.tsx`
+  - `MobileNavigation.tsx`
+  - `Header.tsx`
+  - `Searcch.tsx`
+  - `FileUploader.tsx`
+
 
 
 
