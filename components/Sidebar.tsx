@@ -5,6 +5,7 @@ import Image from 'next/image'
 import React from 'react'
 import { navItems } from '@/constants'
 import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils';
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -32,11 +33,27 @@ const Sidebar = () => {
 
       <nav className='sidebar-nav'>
         <ul className='flex flex-1 flex-col gap-6'>
-          {/* populating the list via @/constants/index.ts */}
-          {navItems.map(({name, icon, url}) => {
-            const active = pathname === url; // if the current pathname is the same as the item's url, then it's active
-            return <Link href={url}></Link>  // if active, then render the link
-          })}
+          {/* populating the list via navItems declared in @/constants/index.ts */}
+          {navItems.map(({name, icon, url}) => (
+            <Link key={name} href={url} className='lg:w-full'>
+              <li className={cn(                      // cn is a utility function from shadcn/ui
+                'sidebar-nav-item',                   // this class is always applied
+                pathname === url && 'shad-active')}   // if pathname is equal to url, add the class "shad-active"
+              > 
+                <Image 
+                  src={icon} 
+                  alt={name}
+                  width={24}
+                  height={24}
+                  className={cn(
+                    'nav-icon',                         // every image will have this class applied
+                    pathname === url && 'nav-icon-active'   // only add "shad-active" if pathname is equal to url
+                  )}
+                />
+                <p className='hidden lg:block'>{name}</p>
+              </li>
+            </Link>  
+          ))}
         </ul>
       </nav>
     </aside>
