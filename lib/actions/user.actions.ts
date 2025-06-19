@@ -2,7 +2,7 @@
 'use server';
 
 import { ID, Query } from "node-appwrite";
-import { createAdminClient } from "../appwrite";
+import { createAdminClient, createSessionClient } from "../appwrite";
 import { appwriteConfig } from "../appwrite/config";
 import { parseStringify } from "../utils";
 import { cookies } from "next/headers";
@@ -96,11 +96,19 @@ export const verifySecret = async ({accountId, password}:{accountId:string, pass
   }
 };
 
-// fetch the current user's data 
+// function that fetches the current user's data (called in /app/(root)/layout.tsx)
 export const getCurrentUser = async () => {
-  const { account } = await createAdminClient();
-  const session = await account.get();
-  if(!session) throw new Error("No active session");
+  const { databases, account } = await createSessionClient();
+  const result = await account.get();
+  const user = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.usersCollectionId,
+    [Query.equal("accountId", result.$id)]
+  );
+  // if no user is found
+  if(user.total <=0) return null;
+  // else return the current user's data
+  return parseStringify(user.documents[0]);
 };
 
 
