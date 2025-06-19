@@ -6,6 +6,7 @@ import { createAdminClient } from "../appwrite";
 import { appwriteConfig } from "../appwrite/config";
 import { parseStringify } from "../utils";
 import { cookies } from "next/headers";
+import { avatarPlaceholderUrl } from "@/constants";
 
  // without this, the action could be executed on the client, which would expose the secret key
 
@@ -69,7 +70,7 @@ export const createAccount = async ({ fullName, email }:{ fullName:string, email
       {
         fullName,
         email,
-        avatar: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
+        avatar: avatarPlaceholderUrl,
         accountId,
       }
     )
