@@ -102,6 +102,8 @@ Note: the InputOTP component has to be placed between the AlertDialogHeader and 
   - `Searcch.tsx`
   - `FileUploader.tsx`
 
+## Sidebar component
+
 For the list items in the navbar of our Sidebar component (aside > nav > ul): 
 - we created a dedicated folder named `constants` at the root of our project.  
 - this folder contains a file named `index.ts` that will populate the list items.
@@ -113,7 +115,7 @@ For the list items in the navbar of our Sidebar component (aside > nav > ul):
 
 https://nextjs.org/docs/messages/next-image-unconfigured-host
 
-# Implementing the dashboard 2
+### Fetch the current user (so we can use fullName and email in the sidebar)
 
 The session data (email, fullName) is provided by the `layout.tsx `file located in the `app/(root)` folder.  
 That is because this file "supplies" our different components: sidebar, Header, etc.  
@@ -121,6 +123,23 @@ That is because this file "supplies" our different components: sidebar, Header, 
 To access the session data, we need to:
 - create a new function in our `user.actions.ts` file. This function will fetch the current user
 - we can then use this function
+
+### Tip - remove the Next.js indicator while in dev mode
+
+- in the `next.config.ts` file, add the following code:
+```ts
+const nextConfig: NextConfig = {
+  devIndicators: false,
+  ...
+}
+```
+
+## MobileNavigation component
+
+- once again, we will use a `shadcn/ui` component to implement the mobile navigation
+- more specifically, we will use a shadcn `Sheet`: https://ui.shadcn.com/docs/components/sheet
+- as usual, open a terminal and run: `npx shadcn@latest add sheet`
+
 
 ---
 EOF
