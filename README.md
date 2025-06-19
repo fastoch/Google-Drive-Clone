@@ -87,7 +87,9 @@ once again, we'll use shadcn/ui to implement this OTP modal:
 
 Note: the InputOTP component has to be placed between the AlertDialogHeader and the AlertDialogFooter components.  
 
-## Signing in (second server action)
+# Implementing the dashboard (frontend)
+
+
 
 
 

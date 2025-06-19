@@ -37,8 +37,8 @@ const handleError = (error: unknown, message: string) => {
   throw error;
 };
 
-// send OTP to the user's email to make sure they have access to the email
-const sendEmailOTP = async ({email}:{email:string}) => {
+// send OTP to the user's email to make sure they have access to the provided email
+export const sendEmailOTP = async ({email}:{email:string}) => {
   const { account } = await createAdminClient();
   try {
     const session = await account.createEmailToken(ID.unique(), email);
@@ -47,6 +47,7 @@ const sendEmailOTP = async ({email}:{email:string}) => {
     handleError(error, "Failed to send OTP email");
   }
 };
+
 // ** End of helper functions **
 
 

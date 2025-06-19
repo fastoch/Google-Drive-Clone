@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Button } from './ui/button'
-import { verifySecret } from '@/lib/actions/user.actions'
+import { verifySecret, sendEmailOTP } from '@/lib/actions/user.actions'
 
 // shadcn alert-dialog imports
 import {
@@ -53,6 +53,7 @@ const OTPModal = ({accountId, email}:{accountId:string, email: string} ) => {
   // for users who haven't used the OTP within 15 minutes
   const handleResendOTP = async() => {
     // call API to resend the OTP email
+    await sendEmailOTP({email});
   }
 
   return (
