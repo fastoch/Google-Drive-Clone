@@ -22,8 +22,10 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 
+import { Button } from './ui/button'
+
 const OTPModal = ({accountId, email}:{accountId:string, email: string} ) => {
-  const [isOpen, setIsOpen] = React.useState(true); // set the initial state to true to show the modal as soon as we get the accountId
+  const [isOpen, setIsOpen] = React.useState(true); // initial state is 'true' to show the modal as soon as we get the accountId
   const [password, setPassword] = React.useState(''); // state for the OTP value
   const [isLoading, setIsLoading] = React.useState(false); // state for the loading state
 
@@ -61,28 +63,50 @@ const OTPModal = ({accountId, email}:{accountId:string, email: string} ) => {
             />
           </AlertDialogTitle>
           <AlertDialogDescription className='subtitle-2 text-center text-light-100'>
-            We have sent a code to <span>{email}</span>. Please enter it below.
+            We have sent a code to <span className='text-brand'>{email}</span>. Please enter it below.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         {/* shadcn input-otp component */}
-        <InputOTP maxLength={6}>
-          <InputOTPGroup>
-            <InputOTPSlot index={0} />
-            <InputOTPSlot index={1} />
-            <InputOTPSlot index={2} />
-          </InputOTPGroup>
-          <InputOTPSeparator />
-          <InputOTPGroup>
-            <InputOTPSlot index={3} />
-            <InputOTPSlot index={4} />
-            <InputOTPSlot index={5} />
+        <InputOTP maxLength={6} value={password} onChange={setPassword}>
+          <InputOTPGroup className='shad-otp'>
+            <InputOTPSlot index={0} className='shad-otp-slot'/>
+            <InputOTPSlot index={1} className='shad-otp-slot'/>
+            <InputOTPSlot index={2} className='shad-otp-slot'/>
+            <InputOTPSlot index={3} className='shad-otp-slot'/>
+            <InputOTPSlot index={4} className='shad-otp-slot'/>
+            <InputOTPSlot index={5} className='shad-otp-slot'/>
           </InputOTPGroup>
         </InputOTP>
 
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <div className='flex w-full flex-col gap-4'>
+            <AlertDialogAction 
+              onClick={handleSubmit} 
+              className='shad-submit-btn h-12'
+              type="button"
+            >Submit
+            {isLoading && (
+              <Image 
+                src="/assets/icons/loader.svg" 
+                alt="loader" 
+                width={24} height={24} 
+                className="ml-2 animate-spin" 
+              />
+            )}
+            </AlertDialogAction>
+
+            <div className='subtitle-2 mt-2 text-center text-light-100'>
+              Didn't get a code?
+              <Button 
+                type="button" 
+                variant="link" 
+                className='pl-2 text-brand'
+                onClick={handleResendOTP}
+              >Resend OTP
+              </Button>
+            </div>
+          </div>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
