@@ -96,6 +96,11 @@ export const verifySecret = async ({accountId, password}:{accountId:string, pass
   }
 };
 
-
+// fetch the current user's data 
+export const getCurrentUser = async () => {
+  const { account } = await createAdminClient();
+  const session = await account.get();
+  if(!session) throw new Error("No active session");
+};
 
 

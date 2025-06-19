@@ -70,10 +70,14 @@ const Sidebar = () => {
         <Image 
           src={avatarPlaceholderUrl}
           alt="avatar"
-          width={44}
-          height={44}
+          width={48}
+          height={48}
           className='sidebar-user-avatar'
         />
+        <div className='hidden lg:block'>
+          <p className='subtitle-2 capitalize'>{fullName}</p>
+          <p className='caption'>{email}</p>
+        </div>
       </div>
     </aside>
   )

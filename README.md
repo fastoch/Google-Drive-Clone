@@ -50,7 +50,7 @@ Now we can focus on the right side of the pages, the authentication Form.
 
 https://ui.shadcn.com/docs/components/form#create-a-form-schema  
 
-### Note (tip)
+### Note - about the form
 
 We wrap the form into an empty React fragment `<></>` because our component will render multiple elements:
 - the form
@@ -106,9 +106,21 @@ For the list items in the navbar of our Sidebar component (aside > nav > ul):
 - we created a dedicated folder named `constants` at the root of our project.  
 - this folder contains a file named `index.ts` that will populate the list items.
 
+### Note - about using CDNs for our assets
 
+- we can use a CDN (Content Delivery Network) to host our assets (images, videos, etc.)
+- but to do that with Next.js, we need to configure each host in our `next.config.ts` file
 
+https://nextjs.org/docs/messages/next-image-unconfigured-host
 
+# Implementing the dashboard 2
+
+The session data (email, fullName) is provided by the `layout.tsx `file located in the `app/(root)` folder.  
+That is because this file "supplies" our different components: sidebar, Header, etc.  
+
+To access the session data, we need to:
+- create a new function in our `user.actions.ts` file. This function will fetch the current user
+- we can then use this function
 
 ---
 EOF
