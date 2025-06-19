@@ -4,6 +4,7 @@
 import { ID, Query } from "node-appwrite";
 import { createAdminClient } from "../appwrite";
 import { appwriteConfig } from "../appwrite/config";
+import { parseStringify } from "../utils";
 
  // without this, the action could be executed on the client, which would expose the secret key
 
@@ -48,7 +49,7 @@ const sendEmailOTP = async ({email}:{email:string}) => {
 // ** End of helper functions **
 
 
-// Our first server action
+// Our first server action (user account creation)
 const createAccount = async ({ fullName, email }:{ fullName:string, email:string }) => {
   // check if user already exists
   const existingUser = await getUserByEmail(email);
@@ -71,6 +72,9 @@ const createAccount = async ({ fullName, email }:{ fullName:string, email:string
       }
     )
   }
+
+  // return the accountId of the new user 
+  return parseStringify({accountId});  // the parseStringify function is declared in the utils.ts file
 };
 
 
