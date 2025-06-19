@@ -102,6 +102,10 @@ Note: the InputOTP component has to be placed between the AlertDialogHeader and 
   - `Searcch.tsx`
   - `FileUploader.tsx`
 
+For the list items in the navbar of our Sidebar component (aside > nav > ul): 
+- we created a dedicated folder named `constants` at the root of our project.  
+- this folder contains a file named `index.ts` that will populate the list items.
+
 
 
 

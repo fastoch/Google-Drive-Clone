@@ -1,3 +1,5 @@
+// This will populate our sidebar component (Sidebar.tsx) > aside > nav > ul 
+
 export const navItems = [
   {
     name: "Dashboard",
