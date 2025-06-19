@@ -75,7 +75,8 @@ Then we can import them into the `index.ts` file: `import { appwriteConfig } fro
 
 ## Allowing our users to sign up (first server action)
 
-see `lib/actions/user.actions.ts` + submit handler in `components/AuthForm.tsx`
+see `lib/actions/user.actions.ts` + submit handler in `components/AuthForm.tsx`  
+This component is functional, we can sign up and are redirected to the home page.
 
 ## OTP Modal (only used on the sign-up page)
 
@@ -89,6 +90,12 @@ Note: the InputOTP component has to be placed between the AlertDialogHeader and 
 
 # Implementing the dashboard (frontend)
 
+- in our `app` folder, we create a new route group (like we did for the auth pages) called `(root)`
+- within it, we create a new `layout.tsx` file
+- type `rafce` to create a new React functional component (requires React snippet extension for VSCodium)
+- as any layout, it will receive a `children` prop
+- move the `page.tsx` file from the `app/` folder to the `app/(root)` folder
+- within the `components` folder, we create new files called `Sidebar.tsx`, `MobileNavigation.tsx`, and `Header.tsx`
 
 
 
