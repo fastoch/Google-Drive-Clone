@@ -5,6 +5,7 @@ import { ID, Query } from "node-appwrite";
 import { createAdminClient } from "../appwrite";
 import { appwriteConfig } from "../appwrite/config";
 import { parseStringify } from "../utils";
+import { cookies } from "next/headers";
 
  // without this, the action could be executed on the client, which would expose the secret key
 
@@ -75,6 +76,22 @@ export const createAccount = async ({ fullName, email }:{ fullName:string, email
 
   // return the accountId of the new user 
   return parseStringify({accountId});  // the parseStringify function is declared in the utils.ts file
+};
+
+export const verifySecret = async ({accountId, password}:{accountId:string, password:string}) => {
+  try { 
+    const { account } = await createAdminClient();
+    const session = await account.createSession(accountId, password);
+    (await cookies()).set("appwrite-session", session.secret, {
+      httpOnly: true,
+      path: "/",
+      sameSite: "strict",
+      secure: true,
+    });
+    return parseStringify({sessionId: session.$id});
+  } catch (error) {
+    handleError(error, "Failed to verify OTP");
+  }
 };
 
 

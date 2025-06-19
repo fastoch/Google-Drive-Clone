@@ -1,30 +1,31 @@
+"use client"; // this is a client component
+
 import React from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { Button } from './ui/button'
+import { verifySecret } from '@/lib/actions/user.actions'
 
 // shadcn alert-dialog imports
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogTitle
 } from "@/components/ui/alert-dialog"
 
 // shadcn input-otp imports
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 
-import { Button } from './ui/button'
-
 const OTPModal = ({accountId, email}:{accountId:string, email: string} ) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = React.useState(true); // initial state is 'true' to show the modal as soon as we get the accountId
   const [password, setPassword] = React.useState(''); // state for the OTP value
   const [isLoading, setIsLoading] = React.useState(false); // state for the loading state
@@ -35,7 +36,14 @@ const OTPModal = ({accountId, email}:{accountId:string, email: string} ) => {
     setIsLoading(true); // show the loading spinner while the OTP is being verified
     try {
       // call API to verify the OTP
-      
+      const sessionId = await verifySecret({
+        accountId,
+        password
+      });
+
+      if(sessionId) {
+        router.push("/"); // redirect to the home page
+      }
     } catch(error) {
       console.log('Failed to verify OTP', error);
     }
