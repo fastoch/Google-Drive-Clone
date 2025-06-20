@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link'
 import { Button } from './ui/button'
 import FileUploader from './FileUploader' 
+import { signOutUser } from '@/lib/actions/user.actions'
 
 // shadcn sheet imports
 import {
@@ -82,7 +83,14 @@ const MobileNavigation = ({ ownerId, accountId, fullName, avatar, email}: Props)
 
           <div className='flex flex-col justify-between gap-5 pb-5'>
             <FileUploader />
-            <Button type='submit' className='mobile-sign-out-button' title="Log Out" onClick={() => {}}>
+            <Button 
+              type='submit' 
+              className='mobile-sign-out-button' 
+              title="Log Out" 
+              onClick={async () => {
+                // sign out the user
+                await signOutUser();             
+              }}>
               <Image src="/assets/icons/logout.svg" alt="logout" width={24} height={24} />
             </Button>
           </div>
