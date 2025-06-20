@@ -131,12 +131,11 @@ export const signOutUser = async () => {
 
 // Sign-in functionality
 export const signInUser = async ({email}: {email:string}) => {
-  const { account } = await createSessionClient();
   try {
     const existingUser = await getUserByEmail(email);
     // if the user exists, send an OTP to the user's email
     if(existingUser) {
-      await sendEmailOTP({email});
+      await sendEmailOTP({ email });
       return parseStringify({accountId: existingUser.accountId});
     }
     // if the user does not exist, display an error message

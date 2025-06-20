@@ -65,15 +65,17 @@ const AuthForm = ({ type }: { type: FormType }) => {
     // create a new user account if not already existing (see user.actions.ts)
     try {
       const user = 
-        // if the user is signing up, create a new user account
-        type === 'sign-up' ? 
-          await createAccount({  
-          fullName: values.fullName || '',  // empty string if the user is trying to sign in
-          email: values.email 
-          })
-        // else, sign in the user
+        type === 'sign-up' 
+          // if the user is signing up, create a new user account
+          ? await createAccount({  
+              fullName: values.fullName || '',  // the fullName field is optional 
+              email: values.email 
+            })
+        // else, sign them in
         : await signInUser({email: values.email});
+
       setAccountId(user.accountId);  // set the accountId state to the user's accountId
+
     } catch {
       setErrorMessage("Failed to create an account. Please try again.");
     } finally {

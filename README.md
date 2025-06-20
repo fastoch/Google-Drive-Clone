@@ -173,7 +173,6 @@ export const signOutUser = async () => {
 - in the `user.actions.ts` file, we create a new function called `signInUser`
 ```ts
 export const signInUser = async ({email}: {email:string}) => {
-  const { account } = await createSessionClient();
   try {
     const existingUser = await getUserByEmail(email);
     // if the user exists, send an OTP to the user's email
@@ -194,4 +193,4 @@ export const signInUser = async ({email}: {email:string}) => {
 
 
 ---
-EOF @4:38:00
+EOF @4:39:00
