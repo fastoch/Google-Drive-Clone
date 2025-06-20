@@ -19,7 +19,7 @@ const Header = () => {
           'use server';  // the code below will be executed on the server
           await signOutUser();
         }}>
-          <Button type='submit' className='sign-out-button' title="Log Out" >
+          <Button type='submit' className='sign-out-button' title='Logout' >
             <Image src="/assets/icons/logout.svg" alt="logout" width={24} height={24} className='w-6' />
           </Button>
         </form>

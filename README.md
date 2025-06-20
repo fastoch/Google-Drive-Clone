@@ -193,9 +193,35 @@ export const signInUser = async ({email}: {email:string}) => {
 
 ## Fle Uploader component
 
-- install the `react-dropzone` package: `npm i react-dropzone`
-This package is a simple React hook to create a HTML5-compliant drag'n'drop zone for files.
+- install the `react-dropzone` package: `npm i --save react-dropzone`  
+This package is a simple React hook to create a HTML5-compliant drag'n'drop zone for files.  
+
+https://www.npmjs.com/package/react-dropzone  
+
+- copy the content of `myDropzone` function from the above npm website 
+- and paste it in the `FileUploader.tsx` component like that:
+```tsx
+const FileUploader = () => {
+  const onDrop = useCallback(acceptedFiles => {
+    // Do something with the files
+  }, [])
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+  return (
+    <div {...getRootProps()}>
+      <input {...getInputProps()} />
+      {
+        isDragActive ?
+          <p>Drop the files here ...</p> :
+          <p>Drag 'n' drop some files here, or click to select files</p>
+      }
+    </div>
+  )
+}
+```
+
+
 
 
 ---
-EOF @4:39:00
+EOF @4:43:00

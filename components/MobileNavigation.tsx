@@ -86,10 +86,10 @@ const MobileNavigation = ({ ownerId, accountId, fullName, avatar, email}: Props)
             <Button 
               type='submit' 
               className='mobile-sign-out-button' 
-              title="Log Out" 
               onClick={async () => await signOutUser()}
             >
               <Image src="/assets/icons/logout.svg" alt="logout" width={24} height={24} />
+              <p>Logout</p>
             </Button>
           </div>
         </SheetContent>
