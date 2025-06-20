@@ -139,6 +139,7 @@ const nextConfig: NextConfig = {
 - once again, we will use a `shadcn/ui` component to implement the mobile navigation
 - more specifically, we will use a shadcn `Sheet`: https://ui.shadcn.com/docs/components/sheet
 - as usual, open a terminal and run: `npx shadcn@latest add sheet`
+- we'll also install a shadcn separator: `npx shadcn@latest add separator`
 
 
 ---

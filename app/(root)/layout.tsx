@@ -14,8 +14,8 @@ const layout = async ({children}: {children: React.ReactNode}) => {
       <Sidebar {...currentUser} /> {/* pass the currentUser data to the Sidebar component */}
 
       <section className='flex h-full flex-1 flex-col'>
-        <MobileNavigation />
-        <Header />
+        <MobileNavigation {...currentUser} />
+        <Header {...currentUser} />
         <div className='main-content'>
           {children}
         </div>

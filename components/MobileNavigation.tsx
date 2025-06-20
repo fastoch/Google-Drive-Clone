@@ -9,12 +9,22 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-const MobileNavigation = () => {
+// shadcn separator
+import { Separator } from "@/components/ui/separator"
+
+interface Props {
+  ownerId: string;  // file owner's ID
+  accountId: string;
+  fullName: string;
+  avatar: string;
+  email: string;
+}
+
+const MobileNavigation = ({ ownerId, accountId, fullName, avatar, email}: Props) => {
   const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
 
@@ -26,14 +36,20 @@ const MobileNavigation = () => {
         <SheetTrigger>
           <Image src="/assets/icons/menu.svg" alt="hamburger" width={30} height={30} />
         </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
-            </SheetDescription>
-          </SheetHeader>
+        <SheetContent className='shad-sheet h-screen px-3'>
+          <SheetTitle>
+            <div className='header-user'>
+              <Image src={avatar} alt="avatar" width={44} height={44} className='header-user-avatar' />
+              <div className='sm:hidden lg:block'>
+                <p className='subtitle-2 capitalize'>{fullName}</p>
+                <p className='caption'>{email}</p>
+              </div>
+            </div>
+          </SheetTitle>
+          <SheetDescription>
+            This action cannot be undone. This will permanently delete your account
+            and remove your data from our servers.
+          </SheetDescription>
         </SheetContent>
       </Sheet>
     </header>
