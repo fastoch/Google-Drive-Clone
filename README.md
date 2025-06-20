@@ -191,6 +191,11 @@ export const signInUser = async ({email}: {email:string}) => {
 - we'll use this function in the `AuthForm.tsx` component
 
 
+## Fle Uploader component
+
+- install the `react-dropzone` package: `npm i react-dropzone`
+This package is a simple React hook to create a HTML5-compliant drag'n'drop zone for files.
+
 
 ---
 EOF @4:39:00
