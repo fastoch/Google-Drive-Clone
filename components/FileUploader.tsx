@@ -4,6 +4,7 @@ import React, {useCallback, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'  // shadcn library used for styling the button
+import { getFileType } from '@/lib/utils'
 import Image from 'next/image'
 
 interface Props {
@@ -34,6 +35,9 @@ const FileUploader = ({ownerId, accountId, className}: Props) => {
       {files.length > 0 && (
         <ul className='uploader-preview-list'>
           <h4 className='h4 text-light-100'>Uploading</h4>
+          {files.map((file, index) => {
+            const { type, extension } = getFileType(file.name);  // getFileType is defined in the utils.ts file
+          })}
         </ul>
       )}
 
