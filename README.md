@@ -141,7 +141,9 @@ const nextConfig: NextConfig = {
 - as usual, open a terminal and run: `npx shadcn@latest add sheet`
 - we'll also install a shadcn separator: `npx shadcn@latest add separator`
 
-## Finalize the Auth (sign-in & logout)
+## Finalize the Auth 
+
+### Logout functionality
 
 - to implement the logout functionality, we'll use the Appwrite Assistant
   - from the Appwrite dashboard, press Ctrl + K and select "Ask the AI"
@@ -166,7 +168,11 @@ export const signOutUser = async () => {
 };
 ```
 
+### Sign-in functionality
+
+
+
 
 
 ---
-EOF @4:32:00
+EOF @4:33:00

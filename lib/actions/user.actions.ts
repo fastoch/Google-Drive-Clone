@@ -53,7 +53,7 @@ export const sendEmailOTP = async ({email}:{email:string}) => {
 // ** End of helper functions **
 
 
-// Our first server action (user account creation) - we export this function so we can use it within our form
+// Our first server action (user account creation) - we export this function so we can use it in AuthForm.tsx
 export const createAccount = async ({ fullName, email }:{ fullName:string, email:string }) => {
   // check if user already exists
   const existingUser = await getUserByEmail(email);
