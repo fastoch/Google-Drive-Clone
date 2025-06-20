@@ -144,6 +144,27 @@ const nextConfig: NextConfig = {
 ## Finalize the Auth (sign-in & logout)
 
 - to implement the logout functionality, we'll use the Appwrite Assistant
+  - from the Appwrite dashboard, press Ctrl + K and select "Ask the AI"
+  - then ask: "how can I log my user out?"
+  - the assistant will tell you to use the `deleteSession` method from the Appwrite SDK
+
+Here is the `signOutUser` function defined in the `user.actions.ts` file:
+```ts
+export const signOutUser = async () => {
+  const { account } = await createSessionClient();
+
+  try {
+    // Delete the current session
+    await account.deleteSession("current");
+    (await cookies()).delete("appwrite-session");
+  } catch (error) {
+    handleError(error, "Failed to sign out user");
+  } finally {
+    // Redirect the user to the sign-in page
+    redirect("/sign-in");
+  }
+};
+```
 
 
 

@@ -7,6 +7,7 @@ import { appwriteConfig } from "../appwrite/config";
 import { parseStringify } from "../utils";
 import { cookies } from "next/headers";
 import { avatarPlaceholderUrl } from "@/constants";
+import { redirect } from "next/navigation";
 
  // without this, the action could be executed on the client, which would expose the secret key
 
@@ -111,4 +112,19 @@ export const getCurrentUser = async () => {
   return parseStringify(user.documents[0]);
 };
 
+// Logout functionality: using the deleteSession function from the appwrite SDK
+export const signOutUser = async () => {
+  const { account } = await createSessionClient();
+
+  try {
+    // Delete the current session
+    await account.deleteSession("current");
+    (await cookies()).delete("appwrite-session");
+  } catch (error) {
+    handleError(error, "Failed to sign out user");
+  } finally {
+    // Redirect the user to the sign-in page
+    redirect("/sign-in");
+  }
+};
 
