@@ -3,9 +3,10 @@
 import React, {useCallback, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
 import { Button } from './ui/button'
-import { cn } from '@/lib/utils'  // shadcn library used for styling the button
+import { cn, convertFileToUrl } from '@/lib/utils'  // shadcn library used for styling the button
 import { getFileType } from '@/lib/utils'
 import Image from 'next/image'
+import Thumbnail from './Thumbnail'
 
 interface Props {
   ownerId: string;
@@ -15,11 +16,13 @@ interface Props {
 
 const FileUploader = ({ownerId, accountId, className}: Props) => {
   // to keep track of the files that are being uploaded
-  const [files, setFiles] = useState<File[]>([]);  // type is an array of files, and initial state is an empty array
+  const [files, setFiles] = useState<File[]>([]);  // type = array of files, and initial state = empty array
 
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
-  }, [])
+  // callback function that updates our component’s state with files provided by the user
+  const onDrop = useCallback (async (acceptedFiles: File[]) => {  
+    setFiles(acceptedFiles); // updates the state with the new files that have been dropped
+  }, [])  
+
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   return (
@@ -35,8 +38,20 @@ const FileUploader = ({ownerId, accountId, className}: Props) => {
       {files.length > 0 && (
         <ul className='uploader-preview-list'>
           <h4 className='h4 text-light-100'>Uploading</h4>
+
           {files.map((file, index) => {
             const { type, extension } = getFileType(file.name);  // getFileType is defined in the utils.ts file
+            return (
+              <li key={`${file.name}-${index}`} className='uploader-preview-items'>
+                <div className='flex items-center gap-3'>
+                  <Thumbnail    {/* custom component that renders a preview of the file we're uploading */}
+                    type={type}
+                    extension={extension}
+                    url={convertFileToUrl(file)}  // convertFileToUrl is defined in the utils.ts file
+                  /> 
+                </div>
+              </li>
+            )
           })}
         </ul>
       )}

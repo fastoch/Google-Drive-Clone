@@ -1,3 +1,7 @@
+**sources**:
+- https://github.com/adrianhajdin/storage_management_solution/tree/main
+- https://www.youtube.com/watch?v=8vIDZO_w7lY
+
 # Tech Stack
 
 - Next.js 15 (a framework for building web applications with React components)
@@ -224,4 +228,4 @@ const FileUploader = () => {
 
 
 ---
-EOF @4:43:00
+EOF @4:47:00
