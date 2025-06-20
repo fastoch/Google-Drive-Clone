@@ -170,9 +170,28 @@ export const signOutUser = async () => {
 
 ### Sign-in functionality
 
+- in the `user.actions.ts` file, we create a new function called `signInUser`
+```ts
+export const signInUser = async ({email}: {email:string}) => {
+  const { account } = await createSessionClient();
+  try {
+    const existingUser = await getUserByEmail(email);
+    // if the user exists, send an OTP to the user's email
+    if(existingUser) {
+      await sendEmailOTP({email});
+      return parseStringify({accountId: existingUser.accountId});
+    }
+    // if the user does not exist, display an error message
+    return parseStringify({accountId: null, error: 'User not found'});
+  } catch (error) {
+    handleError(error, "Failed to sign in user");
+  }
+};
+```
 
+- we'll use this function in the `AuthForm.tsx` component
 
 
 
 ---
-EOF @4:33:00
+EOF @4:38:00

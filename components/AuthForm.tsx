@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { set, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { signInUser } from '@/lib/actions/user.actions';
 
 import { Button } from "@/components/ui/button"
 import {
@@ -61,14 +62,18 @@ const AuthForm = ({ type }: { type: FormType }) => {
     setIsLoading(true); // set loading state to true because we're about to send a request to the server
     setErrorMessage(''); // clears any previous error message from the UI before a new submission attempt
 
-    // create new user account if not already existing (see user.actions.ts)
+    // create a new user account if not already existing (see user.actions.ts)
     try {
-      const user = await createAccount({  
-        fullName: values.fullName || '',  // empty string if the user is trying to sign in
-        email: values.email
-      });
-
-      setAccountId(user.accountId);
+      const user = 
+        // if the user is signing up, create a new user account
+        type === 'sign-up' ? 
+          await createAccount({  
+          fullName: values.fullName || '',  // empty string if the user is trying to sign in
+          email: values.email 
+          })
+        // else, sign in the user
+        : await signInUser({email: values.email});
+      setAccountId(user.accountId);  // set the accountId state to the user's accountId
     } catch {
       setErrorMessage("Failed to create an account. Please try again.");
     } finally {

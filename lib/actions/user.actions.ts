@@ -8,6 +8,7 @@ import { parseStringify } from "../utils";
 import { cookies } from "next/headers";
 import { avatarPlaceholderUrl } from "@/constants";
 import { redirect } from "next/navigation";
+import { send } from "process";
 
  // without this, the action could be executed on the client, which would expose the secret key
 
@@ -127,4 +128,22 @@ export const signOutUser = async () => {
     redirect("/sign-in");
   }
 };
+
+// Sign-in functionality
+export const signInUser = async ({email}: {email:string}) => {
+  const { account } = await createSessionClient();
+  try {
+    const existingUser = await getUserByEmail(email);
+    // if the user exists, send an OTP to the user's email
+    if(existingUser) {
+      await sendEmailOTP({email});
+      return parseStringify({accountId: existingUser.accountId});
+    }
+    // if the user does not exist, display an error message
+    return parseStringify({accountId: null, error: 'User not found'});
+  } catch (error) {
+    handleError(error, "Failed to sign in user");
+  }
+};
+
 
