@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
@@ -11,7 +13,7 @@ const Header = () => {
       <div className='header-wrapper'>
         <FileUploader />
         <form>
-          <Button type='submit' className='sign-out-button'>
+          <Button type='submit' className='sign-out-button' title="Log Out" onClick={() => {}}>
             <Image src="/assets/icons/logout.svg" alt="logout" width={24} height={24} className='w-6' />
           </Button>
         </form>

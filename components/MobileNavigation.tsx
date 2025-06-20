@@ -3,12 +3,16 @@
 import React from 'react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { navItems } from '@/constants'
+import { cn } from '@/lib/utils';
+import Link from 'next/link'
+import { Button } from './ui/button'
+import FileUploader from './FileUploader' 
 
 // shadcn sheet imports
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
@@ -45,11 +49,43 @@ const MobileNavigation = ({ ownerId, accountId, fullName, avatar, email}: Props)
                 <p className='caption'>{email}</p>
               </div>
             </div>
+            <Separator className='mb-4 bg-light-200/20' />
           </SheetTitle>
-          <SheetDescription>
-            This action cannot be undone. This will permanently delete your account
-            and remove your data from our servers.
-          </SheetDescription>
+          
+          <nav className='mobile-nav'>
+            <ul className='mobile-nav-list'>
+              {/* populating the list via navItems declared in @/constants/index.ts */}
+              {navItems.map(({name, icon, url}) => (
+                <Link key={name} href={url} className='lg:w-full'>
+                  <li className={cn(                      // cn is a utility function from shadcn/ui
+                    'mobile-nav-item',                   // this class is always applied
+                    pathname === url && 'shad-active')}   // if pathname is equal to url, add the class "shad-active"
+                  > 
+                    <Image 
+                      src={icon} 
+                      alt={name}
+                      width={24}
+                      height={24}
+                      className={cn(
+                        'nav-icon',                         // every image will have this class applied
+                        pathname === url && 'nav-icon-active'   // only add "shad-active" if pathname is equal to url
+                      )}
+                    />
+                    <p>{name}</p>
+                  </li>
+                </Link>  
+              ))}
+            </ul>
+          </nav>
+          
+          <Separator className='my-5 bg-light-200/20' />
+
+          <div className='flex flex-col justify-between gap-5 pb-5'>
+            <FileUploader />
+            <Button type='submit' className='mobile-sign-out-button' title="Log Out" onClick={() => {}}>
+              <Image src="/assets/icons/logout.svg" alt="logout" width={24} height={24} />
+            </Button>
+          </div>
         </SheetContent>
       </Sheet>
     </header>
