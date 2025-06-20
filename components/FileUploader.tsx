@@ -21,9 +21,9 @@ const FileUploader = ({ownerId, accountId, className}: Props) => {
   // callback function that updates our component’s state with files provided by the user
   const onDrop = useCallback (async (acceptedFiles: File[]) => {  
     setFiles(acceptedFiles); // updates the state with the new files that have been dropped
-  }, [])  
+  }, []);
 
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
 
   return (
     <div {...getRootProps()} className='cursor-pointer'>
@@ -44,7 +44,8 @@ const FileUploader = ({ownerId, accountId, className}: Props) => {
             return (
               <li key={`${file.name}-${index}`} className='uploader-preview-items'>
                 <div className='flex items-center gap-3'>
-                  <Thumbnail    {/* custom component that renders a preview of the file we're uploading */}
+                  {/* custom component that renders a preview of the file we're uploading */}
+                  <Thumbnail    
                     type={type}
                     extension={extension}
                     url={convertFileToUrl(file)}  // convertFileToUrl is defined in the utils.ts file
@@ -61,7 +62,7 @@ const FileUploader = ({ownerId, accountId, className}: Props) => {
         : <p>Drag 'n' drop some files here, or click to select files</p>
       }
     </div>
-  )
+  );
 }
 
 export default FileUploader
