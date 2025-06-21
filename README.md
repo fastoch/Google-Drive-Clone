@@ -195,7 +195,7 @@ export const signInUser = async ({email}: {email:string}) => {
 - we'll use this function in the `AuthForm.tsx` component
 
 
-## Fle Uploader component
+## File Uploader component (includes Thumbnail component)
 
 - install the `react-dropzone` package: `npm i --save react-dropzone`  
 This package is a simple React hook to create a HTML5-compliant drag'n'drop zone for files.  
@@ -223,6 +223,12 @@ const FileUploader = () => {
   )
 }
 ```
+
+### Note
+
+For now, this is fake uploading, because the `onDrop` functionality is not properly implemented yet.  
+For that, we have to create a new set of server actions.  
+- in /lib/actions, let's create a new file called `file.actions.ts`
 
 
 
