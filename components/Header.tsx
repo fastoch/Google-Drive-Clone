@@ -14,7 +14,7 @@ const Header = () => {
     <header className='header'>
       <Search />
       <div className='header-wrapper'>
-        <FileUploader />
+        <FileUploader />  
         <form action={async () => {
           'use server';  // the code below will be executed on the server
           await signOutUser();
