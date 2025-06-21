@@ -25,6 +25,12 @@ const FileUploader = ({ownerId, accountId, className}: Props) => {
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
 
+  // cancel file upload, can be multiple-file upload (remove file from state)
+  const handleRemoveFile = (e: React.MouseEvent<HTMLImageElement>, fileName: string) => {
+    e.stopPropagation(); // do not click anything else than the remove icon (line 66 to 70)
+    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName)); // keep all files except the one we want to cancel
+  }
+
   return (
     <div {...getRootProps()} className='cursor-pointer'>
       <input {...getInputProps()} />
@@ -50,7 +56,19 @@ const FileUploader = ({ownerId, accountId, className}: Props) => {
                     extension={extension}
                     url={convertFileToUrl(file)}  // convertFileToUrl is defined in the utils.ts file
                   /> 
+
+                  <div className='preview-item-name'>
+                    {file.name}
+                    <Image src="/assets/icons/file-loader.gif" alt="loader" width={80} height={26} />
+                  </div>
                 </div>
+
+                <Image 
+                  src="/assets/icons/remove.svg" 
+                  alt="remove" 
+                  width={24} height={24} 
+                  onClick={(e) => handleRemoveFile(e, file.name)} // cancel a specific file upload
+                />
               </li>
             )
           })}
